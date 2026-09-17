@@ -49,7 +49,7 @@ func (s *reportService) buildReport(m *entity.Match) (*dto.MatchReportResponse, 
 	return &dto.MatchReportResponse{
 		UUID:              m.UUID,
 		MatchDate:         m.MatchDate.Format(dateLayout),
-		MatchTime:         m.MatchTime,
+		MatchTime:         formatMatchTime(m.MatchTime),
 		Status:            m.Status,
 		HomeTeam:          dto.TeamRef{UUID: m.HomeTeam.UUID, Name: m.HomeTeam.Name},
 		AwayTeam:          dto.TeamRef{UUID: m.AwayTeam.UUID, Name: m.AwayTeam.Name},

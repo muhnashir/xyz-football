@@ -207,11 +207,19 @@ func (s *matchService) List(c *gin.Context) ([]dto.MatchResponse, pagination.Met
 	return result, pagination.BuildMeta(p.Page, p.Limit, total), nil
 }
 
+// formatMatchTime normalizes postgres TIME text ("15:30:00") to the HH:MM contract format ("15:30").
+func formatMatchTime(t string) string {
+	if len(t) >= 5 {
+		return t[:5]
+	}
+	return t
+}
+
 func toMatchResponse(m *entity.Match) *dto.MatchResponse {
 	return &dto.MatchResponse{
 		UUID:      m.UUID,
 		MatchDate: m.MatchDate.Format(dateLayout),
-		MatchTime: m.MatchTime,
+		MatchTime: formatMatchTime(m.MatchTime),
 		Status:    m.Status,
 		HomeScore: m.HomeScore,
 		AwayScore: m.AwayScore,

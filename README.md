@@ -10,7 +10,7 @@ Stack: Go 1.26 + Gin + GORM + PostgreSQL 16 (TRD menyebut Go 1.22; dependency te
 cp .env.example .env
 docker-compose up -d --build     # postgres + api
 make migrate                     # jalankan migration
-make seed                        # buat user admin default
+make seed                        # jalankan seed SQL (admin, tim, pemain, hasil pertandingan)
 open http://localhost:8080/swagger/index.html
 ```
 
@@ -32,7 +32,6 @@ Mengikuti arsitektur layered (`handler → service → repository → entity`) s
 
 ```
 cmd/api        entry point
-cmd/seeder     seed user admin
 config/        load env & koneksi database
 internal/
   entity/      model GORM
@@ -44,7 +43,24 @@ internal/
   router/      registrasi route
 pkg/           response envelope, apperror, pagination, validator, jwt, uploader
 migrations/    skema database (golang-migrate)
+seeds/         data awal dalam SQL murni (admin, tim & pemain, hasil pertandingan)
 ```
+
+## Data Awal (Seed)
+
+Seed ditulis sebagai file `.sql` biasa di [seeds/](seeds/), dijalankan lewat `psql` — bukan kode Go — supaya isinya mudah dibaca dan diubah langsung:
+
+- `001_admin.sql` — user admin default (`admin@xyz.co.id` / `Admin#1234`), password di-hash pakai `pgcrypto` (bcrypt) langsung di database.
+- `002_teams_players.sql` — tim Arsenal & Chelsea beserta starting XI.
+- `003_match_results.sql` — hasil pertandingan Arsenal 2-1 Chelsea beserta pencetak gol & menitnya.
+
+Jalankan semua secara berurutan dengan:
+
+```bash
+make seed
+```
+
+Setiap file aman dijalankan berulang kali (idempoten) — baris yang sudah ada akan otomatis dilewati, tidak akan tercatat dobel.
 
 ## Testing
 
