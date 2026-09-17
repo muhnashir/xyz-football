@@ -1,0 +1,9 @@
+.env
+uploads/*
+!uploads/.gitkeep
+docs/
+*.exe
+/tmp/
+.idea/
+prd.md
+trd.md
