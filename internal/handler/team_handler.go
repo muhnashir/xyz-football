@@ -36,6 +36,7 @@ func (h *TeamHandler) Create(c *gin.Context) {
 		handleErr(c, err)
 		return
 	}
+	team.LogoURL = resolveLogoURL(c, team.LogoURL)
 	response.Created(c, "Tim berhasil dibuat", team)
 }
 
@@ -58,6 +59,9 @@ func (h *TeamHandler) List(c *gin.Context) {
 		handleErr(c, err)
 		return
 	}
+	for i := range teams {
+		teams[i].LogoURL = resolveLogoURL(c, teams[i].LogoURL)
+	}
 	response.Paginated(c, "Data tim berhasil diambil", teams, meta)
 }
 
@@ -79,6 +83,7 @@ func (h *TeamHandler) Detail(c *gin.Context) {
 		handleErr(c, err)
 		return
 	}
+	team.LogoURL = resolveLogoURL(c, team.LogoURL)
 	response.OK(c, "Detail tim berhasil diambil", team)
 }
 
@@ -106,6 +111,7 @@ func (h *TeamHandler) Update(c *gin.Context) {
 		handleErr(c, err)
 		return
 	}
+	team.LogoURL = resolveLogoURL(c, team.LogoURL)
 	response.OK(c, "Tim berhasil diubah", team)
 }
 
@@ -154,7 +160,33 @@ func (h *TeamHandler) UploadLogo(c *gin.Context) {
 		handleErr(c, err)
 		return
 	}
+	team.LogoURL = resolveLogoURL(c, team.LogoURL)
 	response.OK(c, "Logo berhasil diunggah", team)
+}
+
+// UploadLogoImage godoc
+// @Summary      Upload gambar logo (belum terikat ke tim manapun)
+// @Description  Mengunggah file gambar dan menyimpannya di server. Path relatif yang dikembalikan
+// @Description  (mis. "teams/logo/xxx.jpg") dapat dipakai sebagai nilai logo_url saat membuat/mengubah tim.
+// @Tags         Teams
+// @Security     BearerAuth
+// @Accept       multipart/form-data
+// @Produce      json
+// @Param        logo formData file true "File gambar (PNG/JPEG, maks 2MB)"
+// @Success      201 {object} response.Envelope{data=dto.UploadImageResponse}
+// @Router       /uploads/teams/logo [post]
+func (h *TeamHandler) UploadLogoImage(c *gin.Context) {
+	file, err := c.FormFile("logo")
+	if err != nil {
+		handleErr(c, apperror.Validation("File logo wajib diisi"))
+		return
+	}
+	relPath, err := h.svc.UploadLogoImage(file)
+	if err != nil {
+		handleErr(c, err)
+		return
+	}
+	response.Created(c, "Gambar berhasil diunggah", dto.UploadImageResponse{Path: relPath})
 }
 
 // TeamPlayers godoc

@@ -2,6 +2,7 @@ package router
 
 import (
 	"net/http"
+	"path/filepath"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -31,6 +32,7 @@ func New(cfg *config.Config, jwtManager *jwt.Manager, logger *zap.Logger, h Hand
 	r.MaxMultipartMemory = 8 << 20 // 8 MB
 
 	r.Static("/uploads", cfg.UploadDir)
+	r.Static("/teams/logo", filepath.Join(cfg.UploadDir, "teams", "logo"))
 
 	r.GET("/health", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"success": true, "message": "OK"})
@@ -59,6 +61,9 @@ func New(cfg *config.Config, jwtManager *jwt.Manager, logger *zap.Logger, h Hand
 		teams.DELETE("/:uuid", h.Team.Delete)
 		teams.POST("/:uuid/logo", h.Team.UploadLogo)
 		teams.GET("/:uuid/players", h.Team.Players)
+
+		uploads := protected.Group("/uploads")
+		uploads.POST("/teams/logo", h.Team.UploadLogoImage)
 
 		players := protected.Group("/players")
 		players.POST("", h.Player.Create)

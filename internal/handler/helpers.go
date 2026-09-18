@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"strings"
+
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/xyz-corp/xyz-football-api/pkg/apperror"
@@ -32,4 +34,33 @@ func handleErr(c *gin.Context, err error) {
 		return
 	}
 	response.Error(c, apperror.Internal(err.Error()))
+}
+
+// publicBaseURL derives the scheme+host the current request actually came in on,
+// so links we hand back always match the port/host the client used — instead of
+// relying on a separately configured (and easily out-of-sync) base URL.
+func publicBaseURL(c *gin.Context) string {
+	scheme := "http"
+	if c.Request.TLS != nil || c.GetHeader("X-Forwarded-Proto") == "https" {
+		scheme = "https"
+	}
+	host := c.Request.Host
+	if fwd := c.GetHeader("X-Forwarded-Host"); fwd != "" {
+		host = fwd
+	}
+	return scheme + "://" + host
+}
+
+// resolveLogoURL turns a stored relative path (e.g. "teams/logo/x.jpg") into an
+// absolute URL against the current request's host. Values that are already
+// absolute (legacy rows, or a client-supplied external URL) are left untouched.
+func resolveLogoURL(c *gin.Context, logoURL *string) *string {
+	if logoURL == nil || *logoURL == "" {
+		return logoURL
+	}
+	if strings.HasPrefix(*logoURL, "http://") || strings.HasPrefix(*logoURL, "https://") {
+		return logoURL
+	}
+	full := publicBaseURL(c) + "/" + strings.TrimPrefix(*logoURL, "/")
+	return &full
 }

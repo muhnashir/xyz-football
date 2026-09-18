@@ -24,7 +24,6 @@ type Config struct {
 	SeasonStartDate time.Time
 
 	UploadDir string
-	BaseURL   string
 
 	RateLimit string
 }
@@ -50,7 +49,6 @@ func Load() (*Config, error) {
 	v.SetDefault("JWT_REFRESH_TTL", 604800)
 	v.SetDefault("SEASON_START_DATE", time.Now().Format("2006")+"-01-01")
 	v.SetDefault("UPLOAD_DIR", "./uploads")
-	v.SetDefault("BASE_URL", "http://localhost:8080")
 	v.SetDefault("RATE_LIMIT", "5-M")
 
 	seasonStart, err := time.Parse("2006-01-02", v.GetString("SEASON_START_DATE"))
@@ -71,7 +69,6 @@ func Load() (*Config, error) {
 		JWTRefreshTTL:   v.GetInt("JWT_REFRESH_TTL"),
 		SeasonStartDate: seasonStart,
 		UploadDir:       v.GetString("UPLOAD_DIR"),
-		BaseURL:         v.GetString("BASE_URL"),
 		RateLimit:       v.GetString("RATE_LIMIT"),
 	}, nil
 }

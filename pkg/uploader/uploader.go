@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"mime/multipart"
 	"os"
+	"path"
 	"path/filepath"
 
 	"github.com/google/uuid"
@@ -17,17 +18,18 @@ var allowedMIME = map[string]bool{
 const MaxFileSize = 2 * 1024 * 1024 // 2MB
 
 type Uploader struct {
-	dir     string
-	baseURL string
+	dir string
 }
 
-func New(dir, baseURL string) *Uploader {
-	return &Uploader{dir: dir, baseURL: baseURL}
+func New(dir string) *Uploader {
+	return &Uploader{dir: dir}
 }
 
-// SaveLogo validates MIME type & size, then stores the file under a UUID name.
-// Returns the public URL to the stored file.
-func (u *Uploader) SaveLogo(fileHeader *multipart.FileHeader) (string, error) {
+// Save validates MIME type & size, then stores the file under dir/<subDir>/<generated-name>.
+// subDir uses forward slashes (e.g. "teams/logo"). It returns the relative path to the
+// stored file (e.g. "teams/logo/3fa85f64-....jpg") — callers turn this into a public URL
+// by prefixing the request's own scheme+host, so links stay correct regardless of port/env.
+func (u *Uploader) Save(subDir string, fileHeader *multipart.FileHeader) (string, error) {
 	if fileHeader.Size > MaxFileSize {
 		return "", fmt.Errorf("ukuran file melebihi 2MB")
 	}
@@ -49,13 +51,14 @@ func (u *Uploader) SaveLogo(fileHeader *multipart.FileHeader) (string, error) {
 		return "", err
 	}
 
-	if err := os.MkdirAll(u.dir, 0o755); err != nil {
+	targetDir := filepath.Join(u.dir, filepath.FromSlash(subDir))
+	if err := os.MkdirAll(targetDir, 0o755); err != nil {
 		return "", err
 	}
 
 	ext := filepath.Ext(fileHeader.Filename)
 	fileName := uuid.New().String() + ext
-	dstPath := filepath.Join(u.dir, fileName)
+	dstPath := filepath.Join(targetDir, fileName)
 
 	dst, err := os.Create(dstPath)
 	if err != nil {
@@ -67,7 +70,13 @@ func (u *Uploader) SaveLogo(fileHeader *multipart.FileHeader) (string, error) {
 		return "", err
 	}
 
-	return fmt.Sprintf("%s/uploads/%s", u.baseURL, fileName), nil
+	return path.Join(subDir, fileName), nil
+}
+
+// SaveLogo is a convenience wrapper around Save for team logos, used by the
+// /teams/{uuid}/logo endpoint.
+func (u *Uploader) SaveLogo(fileHeader *multipart.FileHeader) (string, error) {
+	return u.Save("teams/logo", fileHeader)
 }
 
 func detectContentType(buf []byte) string {

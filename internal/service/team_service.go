@@ -22,6 +22,7 @@ type TeamService interface {
 	Detail(id uuid.UUID) (*dto.TeamDetailResponse, error)
 	List(c *gin.Context) ([]dto.TeamResponse, pagination.Meta, error)
 	UploadLogo(id uuid.UUID, file *multipart.FileHeader) (*dto.TeamResponse, error)
+	UploadLogoImage(file *multipart.FileHeader) (string, error)
 }
 
 type teamService struct {
@@ -150,18 +151,29 @@ func (s *teamService) UploadLogo(id uuid.UUID, file *multipart.FileHeader) (*dto
 		return nil, wrapNotFound(err, "Tim tidak ditemukan")
 	}
 
-	url, err := s.up.SaveLogo(file)
+	relPath, err := s.up.SaveLogo(file)
 	if err != nil {
 		return nil, apperror.Validation(err.Error())
 	}
 
-	team.LogoURL = &url
+	team.LogoURL = &relPath
 	if err := s.teamRepo.Update(team); err != nil {
 		return nil, apperror.Internal(err.Error())
 	}
 
 	total, _ := s.teamRepo.CountPlayers(team.ID)
 	return toTeamResponse(team, total), nil
+}
+
+// UploadLogoImage stores an image on disk without attaching it to any team yet.
+// It returns the relative path (e.g. "teams/logo/<uuid>.jpg") to be passed as
+// logo_url when creating/updating a team.
+func (s *teamService) UploadLogoImage(file *multipart.FileHeader) (string, error) {
+	relPath, err := s.up.SaveLogo(file)
+	if err != nil {
+		return "", apperror.Validation(err.Error())
+	}
+	return relPath, nil
 }
 
 func toTeamResponse(t *entity.Team, totalPlayers int64) *dto.TeamResponse {

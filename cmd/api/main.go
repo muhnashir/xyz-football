@@ -49,7 +49,7 @@ func main() {
 	}
 
 	jwtManager := jwt.NewManager(cfg.JWTSecret, cfg.JWTAccessTTL, cfg.JWTRefreshTTL)
-	up := uploader.New(cfg.UploadDir, cfg.BaseURL)
+	up := uploader.New(cfg.UploadDir)
 
 	// Repositories
 	userRepo := repository.NewUserRepository(db)

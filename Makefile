@@ -6,7 +6,7 @@ DB_URL=postgres://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)?ssl
 run:      ; go run ./cmd/api
 migrate:  ; migrate -path migrations -database "$(DB_URL)" up
 rollback: ; migrate -path migrations -database "$(DB_URL)" down 1
-swagger:  ; swag init -g cmd/api/main.go -o docs
+swagger:  ; go run github.com/swaggo/swag/cmd/swag@v1.8.12 init -g cmd/api/main.go -o docs
 test:     ; go test ./... -cover
 up:       ; docker-compose up -d --build
 down:     ; docker-compose down
