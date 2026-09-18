@@ -1,0 +1,108 @@
+##Evaluasi Web https://ayo.co.id
+
+1. Countdown resend OTP tidak konsisten dengan cooldown sebenarnya di sisi server
+   Pada proses pendaftaran menggunakan nomor HP, sistem mengirimkan OTP melalui WhatsApp,
+   dan pengguna baru dapat meminta pengiriman ulang (resend) setelah countdown 2 menit yang ditampilkan di layar selesai.
+
+   Namun ditemukan inkonsistensi berikut:
+   - Ketika halaman di-refresh saat countdown masih berjalan, timer di layar kembali ke 2 menit dari awal (seolah-olah cooldown reset).
+   - Saat dicoba hit API secara langsung, cooldown yang sebenarnya berlaku di server hanya 1 menit, bukan 2 menit seperti yang ditampilkan di UI.
+
+   Hal ini menunjukkan bahwa countdown yang ditampilkan hanya berjalan di sisi client (client-side timer)
+   dan tidak disinkronkan dengan waktu cooldown yang sesungguhnya dari server. Selain berpotensi membingungkan pengguna (durasi tunggu yang terlihat tidak akurat),
+   celah ini juga berisiko disalahgunakan untuk memicu pengiriman OTP berulang kali dalam waktu singkat (potensi abuse/spam OTP) karena validasi cooldown tidak konsisten antara tampilan dan backend.
+   Rekomendasi: countdown resend OTP sebaiknya dihitung berdasarkan timestamp/response dari server (misalnya server mengembalikan waktu expiry cooldown),
+   bukan timer lokal di client, sehingga nilai yang ditampilkan selalu akurat meski halaman di-refresh, dan rate limit di endpoint pengiriman OTP tetap konsisten dengan apa yang ditampilkan ke pengguna.
+
+2. Halaman Contact (https://ayo.co.id/contact) tidak memberikan kepastian kepada pengguna setelah submit pertanyaan
+   Problem:
+   Pada halaman Contact, pengguna hanya disediakan form untuk menginput pertanyaan tanpa ada kejelasan lebih lanjut setelah submit.
+   Hal ini menimbulkan sejumlah pertanyaan/ketidakpastian di benak pengguna, antara lain:
+   - Kapan pertanyaan tersebut akan direspons/dihubungi kembali.
+   - Apakah pertanyaannya benar-benar sudah diterima oleh sistem.
+   - Apakah ada tim/agent yang sedang online saat itu.
+   - Apakah pertanyaannya bisa langsung dijawab saat itu juga.
+
+   Akibat dari ketidakpastian ini, cukup banyak kemungkinan pengguna akhirnya:
+   - Menutup halaman begitu saja.
+   - Batal melakukan submit pertanyaan.
+   - Mencari kontak/channel lain di luar website.
+   - Tidak kembali lagi ke halaman tersebut.
+
+   Rekomendasi Improvement: Menambahkan AI Live Chat (floating widget) pada halaman Contact, dengan alur sebagai berikut:
+
+   User membuka halaman
+           ↓
+   Widget AI Chat muncul
+           ↓
+   User mengajukan pertanyaan
+           ↓
+   AI menjawab FAQ / pertanyaan umum
+           ↓
+   Jika AI tidak dapat menjawab
+           ↓
+   Pertanyaan dieskalasi/di-transfer ke Human Agent
+
+   Dengan adanya live chat, pengguna mendapatkan respons instan (setidaknya untuk pertanyaan umum) dan kepastian bahwa pertanyaannya diterima serta sedang ditindaklanjuti,
+   sehingga mengurangi drop-off dibandingkan hanya mengandalkan form contact yang bersifat satu arah dan tanpa kepastian waktu respons.
+
+##Evaluasi Aplikasi AYO — Area yang Perlu Ditingkatkan
+Setelah menginstal dan mencoba aplikasi AYO di perangkat iOS dan Android,
+terdapat beberapa hal yang menurut saya masih bisa ditingkatkan:
+
+1. Validasi nomor rekening bank saat penambahan data rekening
+   Saat ini, sistem tampaknya belum melakukan verifikasi keabsahan nomor rekening yang didaftarkan untuk keperluan pengembalian dana (refund).
+   Akibatnya, pengguna berpotensi memasukkan nomor rekening yang salah atau tidak valid tanpa terdeteksi sejak awal.
+   Hal ini bisa diatasi dengan mengintegrasikan layanan verifikasi rekening pihak ketiga,
+   misalnya API dari Iluma (https://docs.iluma.ai/),
+   yang pernah saya gunakan sebelumnya dan cukup andal untuk mengecek keaslian nomor rekening secara real-time sebelum data disimpan.
+
+2. Belum ada validasi input pada data tinggi dan berat badan
+   Ketika mengubah data tinggi badan dan berat badan di profil, aplikasi tidak melakukan pengecekan terhadap nilai yang dimasukkan.
+   Ini membuka celah bagi pengguna untuk memasukkan angka yang tidak masuk akal (misalnya nol, negatif, atau di luar rentang wajar manusia),
+   yang berpotensi mengganggu keakuratan data maupun fitur lain yang bergantung pada informasi tersebut.
+
+3. Pengalaman pengguna (UX) saat memutar foto profil di iOS kurang optimal
+   Pada proses pembaruan foto profil di versi iOS, kontrol untuk memutar (rotate) foto diletakkan terlalu dekat dengan tepi bawah layar,
+   sehingga sulit dijangkau dan bahkan tidak bisa diklik/ditekan sama sekali.
+   Perbaikan pada penempatan elemen UI ini akan membuat proses edit foto menjadi lebih nyaman digunakan.
+
+4. Terdapat beberapa halaman yang masih mengalami glitch/error
+   Beberapa bagian aplikasi masih belum stabil, misalnya:
+   - Saat memperbarui skill level badminton, layar langsung menjadi blank putih setelah tombol Confirm ditekan.
+   - Halaman invite teman juga masih mengalami glitch.
+   Kestabilan (stability) pada alur-alur penting seperti ini perlu menjadi prioritas perbaikan,
+   karena berdampak langsung pada kenyamanan dan kepercayaan pengguna terhadap aplikasi.
+
+5. Belum ada Call-to-Action (CTA) yang jelas pada halaman utama Chat (tab Direct)
+   (Contoh: tangkapan layar halaman Chat > tab Direct, kondisi hanya ada satu riwayat obrolan dan sisa layar kosong tanpa panduan apa pun)
+
+   Problem:
+   Pada halaman utama fitur Chat, khususnya tab Direct, tidak terdapat instruksi atau CTA yang jelas bagi pengguna untuk memulai percakapan baru.
+   Halaman hanya menampilkan layar putih kosong tanpa panduan, yang berpotensi menimbulkan kebingungan pada user journey,
+   terutama bagi pengguna yang belum memiliki riwayat obrolan sama sekali.
+
+   Rekomendasi Solusi:
+   Menambahkan Floating Action Button (FAB) persisten di pojok kanan bawah, atau tombol aksi di tengah layar pada halaman daftar Chat.
+   Saat diklik, tombol ini akan mengarahkan pengguna ke alur pembuatan pesan baru, di mana mereka dapat mencari aktivitas atau pemain.
+   Selain itu, area layar yang kosong (empty state) sebaiknya dimanfaatkan untuk memberikan panduan kontekstual, bukan dibiarkan kosong begitu saja.
+
+   Rekomendasi UX:
+   a. Tombol Memulai Pesan (CTA pada Halaman Utama)
+      - Teks Tombol: "Mulai Chat" atau "Pesan Baru"
+      - Teks Alternatif: "Cari Teman Main" atau "Sapa Teman"
+
+   b. Empty State pada Halaman Direct Utama
+      - Headline: "Belum Ada Obrolan"
+      - Body Copy: "Yuk, mulai sapa teman, pelatih, atau komunitas olahragamu di sini!"
+      - Primary Button (di tengah layar): "Mulai Pesan Baru"
+
+   c. Empty State pada Halaman "New Message" (Tab Aktivitas)
+      - Headline: "Belum Ada Aktivitas"
+      - Body Copy: "Sepertinya kamu belum mengikuti aktivitas olahraga apa pun akhir-akhir ini. Yuk, gabung dan temukan teman baru!"
+      - Button CTA: "Temukan Aktivitas" atau "Jelajahi Aktivitas"
+
+   d. Empty State pada Halaman Pencarian Orang/Pemain
+      - Headline: "Belum Ada Teman Main"
+      - Body Copy: "Kamu belum berinteraksi dengan pemain lain belakangan ini. Cari teman main di sekitarmu"
+      - Search Placeholder: "Cari nama teman, klub, atau pelatih..."
