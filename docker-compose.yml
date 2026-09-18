@@ -7,7 +7,12 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
       POSTGRES_DB: ${DB_NAME:-xyz_football}
     ports:
-      - "5432:5432"
+      # Port yang di-expose ke HOST diambil dari DB_PORT di .env (default 5432).
+      # Di dalam jaringan docker-compose, api tetap selalu connect ke postgres:5432
+      # (lihat environment: DB_HOST/DB_PORT di service api) — jadi nilai ini hanya
+      # perlu diubah kalau port 5432 di host sudah dipakai proses lain (mis. Postgres
+      # native/systemd), tanpa mempengaruhi koneksi antar-container.
+      - "${DB_PORT:-5432}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
