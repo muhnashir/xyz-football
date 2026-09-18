@@ -1,6 +1,6 @@
 # XYZ Football Team Management API
 
-Backend REST API (JSON) untuk manajemen tim, pemain, jadwal, dan hasil pertandingan sepak bola amatir milik Perusahaan XYZ. Dibangun mengikuti [PRD](prd.md) dan [TRD](trd.md).
+Backend REST API (JSON) untuk manajemen tim, pemain, jadwal, dan hasil pertandingan sepak bola amatir milik Perusahaan XYZ.
 
 Stack: Go 1.26 + Gin + GORM + PostgreSQL 16 (TRD menyebut Go 1.22; dependency terbaru saat implementasi mensyaratkan minimum Go 1.26, sehingga versi toolchain disesuaikan).
 
@@ -75,5 +75,3 @@ Generate ulang Swagger setelah mengubah anotasi handler:
 ```bash
 make swagger
 ```
-
-Referensi lengkap kontrak API & aturan bisnis ada di [trd.md](trd.md) Bagian 6–8.

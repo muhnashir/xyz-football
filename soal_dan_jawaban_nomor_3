@@ -1,0 +1,51 @@
+1. Jelaskan alasan mengapa Anda merupakan kandidat terbaik untuk posisi ini,
+serta bagaimana kontribusi Anda dapat memberikan nilai tambah bagi
+perusahaan kami.
+Jawab :
+Saya memiliki keahlian backend Golang yang teruji di skala startup (KiriminAja), mentalitas product ownership dari membangun Trimhub,
+serta jiwa kepemimpinan dan komunikasi yang terasah sebagai ketua pemuda di kampung(2019-2021 & 2025-2027). Ditambah kecintaan saya pada badminton dan futsal,
+saya memahami kebutuhan produk AYO secara teknis maupun dari kacamata komunitas nyata.
+
+2.Sebutkan tiga keunggulan utama yang Anda miliki yang membuat Anda
+pantas untuk terpilih dalam rekrutmen ini
+Jawab :
+- Keselarasan dengan Domain Produk: Sebagai pemain aktif badminton dan futsal di komunitas,
+saya memahami langsung pain points dan kebutuhan pengguna AYO, memudahkan perancangan fitur yang tepat sasaran.
+
+- Product Ownership Kuat (Kreator Trimhub.id): Terbiasa membangun dan mengelola produk sendiri secara end-to-end,
+sehingga mandiri, solutif, dan selalu melihat kode dari sisi nilai bisnis serta kenyamanan pengguna.
+
+- Spesialisasi Backend Golang (Startup KiriminAja.com): Berpengalaman menangani sistem backend berkecepatan tinggi dan
+konkurensi data transaksi skala besar di KiriminAja. Keahlian ini siap saya terapkan di AYO untuk menjaga sistem booking
+real-time tetap stabil dan bebas risiko double booking di jam sibuk.
+
+3.Berikan contoh konkret pencapaian atau pengalaman Anda yang relevan
+dengan posisi ini, serta jelaskan bagaimana hal tersebut dapat bermanfaat
+bagi tim kami.
+Jawab :
+Di KiriminAja, saya berkontribusi mengimplementasikan sistem backend untuk Fraud Detection System (FDS) guna menekan potensi kerugian akibat saldo minus (yang mencapai miliaran rupiah dari ribuan member bermasalah). Saya mengerjakan mekanisme auto-suspend dan pencegahan transaksi secara real-time saat proses registrasi, login, hingga pembuatan order berdasarkan validasi data perangkat, identitas, dan anomali pengiriman. Sistem ini memangkas proses analisis manual tim fraud dan secara otomatis mencegah potensi kerugian finansial perusahaan.
+
+Manfaat bagi Tim AYO:Pengalaman mengamankan alur transaksi dan validasi data ini sangat berguna untuk AYO, khususnya dalam mencegah penyalahgunaan sistem promo/voucher, memitigasi akun fiktif/spammer yang menahan (hold) slot lapangan tanpa bayar, serta menjaga sistem reservasi tetap bersih, adil, dan menguntungkan bagi pemilik venue maupun komunitas.
+
+
+4. Tuliskan motivasi Anda melamar posisi ini dan bagaimana Anda berencana
+untuk memberikan dampak positif jika terpilih nantinya.
+Jawab :
+Motivasi:
+Saya suka badminton dan futsal. Saya juga pernah cedera cukup lama sampai berat badan naik puluhan kilo, dan sekarang lagi berjuang keras buat bangun habit olahraga lagi bareng teman-teman di kampung. AYO itu aplikasi yang solutif banget buat orang-orang seperti saya. Buat saya pribadi, kerja di AYO bukan cuma sekadar ngoding cari nafkah, tapi ikut ngembangin produk yang memang saya pakai, saya butuhkan, dan saya senangi bidangnya.
+
+Rencana Dampak Positif:
+Dari sisi teknis, saya bawa pengalaman backend Golang dari KiriminAja dan pengalaman bikin Trimhub supaya sistem booking AYO tetap lancar, cepat, dan nggak gampang error pas lagi ramai-ramainya. Dari sisi tim, terbiasa jadi ketua pemuda di kampung bikin saya terbiasa komunikasi luwes, nggak kaku, dan siap bantu tim tetap solid buat ngejar target bareng.
+
+5. Jika Anda diberikan kesempatan untuk bergabung, langkah-langkah apa
+yang akan Anda ambil dalam 3 bulan pertama untuk menunjukkan performa
+terbaik?
+Jawab :
+Bulan ke-1 (Paham Sistem & Ikuti SOP):
+Fokus onboarding untuk memahami codebase, aturan penulisan kode, arsitektur backend, alur deployment, serta SOP kerja yang ada di AYO. Mengamati alur kerja tim dan berdiskusi dengan mentor/senior untuk memastikan pemahaman teknis sudah matang dan sesuai batasan wewenang sebelum mulai memegang tugas mandiri.
+
+Bulan ke-2 (Eksekusi Fitur Sesuai Arahan):
+Mulai mengerjakan fitur baru secara mandiri dengan tetap berpegang pada standar teknis tim. Berkoordinasi intens dengan senior engineer, tim produk, dan QA agar kode yang dibuat rapi, sesuai spesifikasi, dan tidak melanggar batasan sistem yang sudah berjalan.
+
+Bulan ke-3 (Kontribusi Stabil & Solutif):
+Menjaga konsistensi kerja dan kualitas kode. Jika melihat ada potensi optimasi (seperti efisiensi kueri atau respons sistem di jam sibuk), saya akan diskusikan dan mintakan persetujuan terlebih dahulu ke tim sebelum implementasi, sambil siap membantu review kode sesuai standar tim.

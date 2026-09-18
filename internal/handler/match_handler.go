@@ -43,7 +43,15 @@ func (h *MatchHandler) Create(c *gin.Context) {
 // @Tags         Matches
 // @Security     BearerAuth
 // @Produce      json
-// @Success      200 {object} response.Envelope{data=[]dto.MatchResponse}
+// @Param        page       query    int    false  "Nomor halaman (default 1)"
+// @Param        limit      query    int    false  "Jumlah data per halaman (default 10, maksimum 100)"
+// @Param        status     query    string false  "Filter status: scheduled, in_progress, finished, postpone"
+// @Param        team_uuid  query    string false  "Filter berdasarkan UUID tim (home atau away)"
+// @Param        date_from  query    string false  "Filter tanggal mulai (YYYY-MM-DD)"
+// @Param        date_to    query    string false  "Filter tanggal akhir (YYYY-MM-DD)"
+// @Param        sort_by    query    string false  "Kolom sorting: created_at, match_date, status"
+// @Param        order      query    string false  "Arah sorting: asc atau desc (default desc)"
+// @Success      200 {object} response.Envelope{data=[]dto.MatchResponse,meta=dto.PaginationMeta}
 // @Router       /matches [get]
 func (h *MatchHandler) List(c *gin.Context) {
 	matches, meta, err := h.svc.List(c)

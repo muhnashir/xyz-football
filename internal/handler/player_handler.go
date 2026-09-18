@@ -42,7 +42,14 @@ func (h *PlayerHandler) Create(c *gin.Context) {
 // @Tags         Players
 // @Security     BearerAuth
 // @Produce      json
-// @Success      200 {object} response.Envelope{data=[]dto.PlayerResponse}
+// @Param        page       query    int    false  "Nomor halaman (default 1)"
+// @Param        limit      query    int    false  "Jumlah data per halaman (default 10, maksimum 100)"
+// @Param        search     query    string false  "Cari berdasarkan nama pemain"
+// @Param        team_uuid  query    string false  "Filter berdasarkan UUID tim"
+// @Param        position   query    string false  "Filter posisi: PENYERANG, GELANDANG, BERTAHAN, PENJAGA_GAWANG"
+// @Param        sort_by    query    string false  "Kolom sorting: created_at, name, jersey_number"
+// @Param        order      query    string false  "Arah sorting: asc atau desc (default desc)"
+// @Success      200 {object} response.Envelope{data=[]dto.PlayerResponse,meta=dto.PaginationMeta}
 // @Router       /players [get]
 func (h *PlayerHandler) List(c *gin.Context) {
 	players, meta, err := h.svc.List(c)

@@ -19,7 +19,11 @@ func NewReportHandler(svc service.ReportService) *ReportHandler {
 // @Tags         Reports
 // @Security     BearerAuth
 // @Produce      json
-// @Success      200 {object} response.Envelope{data=[]dto.MatchReportResponse}
+// @Param        page     query    int    false  "Nomor halaman (default 1)"
+// @Param        limit    query    int    false  "Jumlah data per halaman (default 10, maksimum 100)"
+// @Param        sort_by  query    string false  "Kolom sorting: match_date, created_at"
+// @Param        order    query    string false  "Arah sorting: asc atau desc (default desc)"
+// @Success      200 {object} response.Envelope{data=[]dto.MatchReportResponse,meta=dto.PaginationMeta}
 // @Router       /reports/matches [get]
 func (h *ReportHandler) List(c *gin.Context) {
 	reports, meta, err := h.svc.MatchReportList(c)

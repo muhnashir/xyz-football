@@ -44,7 +44,13 @@ func (h *TeamHandler) Create(c *gin.Context) {
 // @Tags         Teams
 // @Security     BearerAuth
 // @Produce      json
-// @Success      200 {object} response.Envelope{data=[]dto.TeamResponse}
+// @Param        page     query    int    false  "Nomor halaman (default 1)"
+// @Param        limit    query    int    false  "Jumlah data per halaman (default 10, maksimum 100)"
+// @Param        search   query    string false  "Cari berdasarkan nama tim"
+// @Param        city     query    string false  "Filter berdasarkan kota"
+// @Param        sort_by  query    string false  "Kolom sorting: created_at, name, founded_year, city"
+// @Param        order    query    string false  "Arah sorting: asc atau desc (default desc)"
+// @Success      200 {object} response.Envelope{data=[]dto.TeamResponse,meta=dto.PaginationMeta}
 // @Router       /teams [get]
 func (h *TeamHandler) List(c *gin.Context) {
 	teams, meta, err := h.svc.List(c)
