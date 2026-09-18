@@ -23,29 +23,39 @@ real-time tetap stabil dan bebas risiko double booking di jam sibuk.
 dengan posisi ini, serta jelaskan bagaimana hal tersebut dapat bermanfaat
 bagi tim kami.
 Jawab :
-Di KiriminAja, saya berkontribusi mengimplementasikan sistem backend untuk Fraud Detection System (FDS) guna menekan potensi kerugian akibat saldo minus (yang mencapai miliaran rupiah dari ribuan member bermasalah). Saya mengerjakan mekanisme auto-suspend dan pencegahan transaksi secara real-time saat proses registrasi, login, hingga pembuatan order berdasarkan validasi data perangkat, identitas, dan anomali pengiriman. Sistem ini memangkas proses analisis manual tim fraud dan secara otomatis mencegah potensi kerugian finansial perusahaan.
+Di KiriminAja,
+saya berkontribusi mengimplementasikan sistem backend untuk Fraud Detection System (FDS) guna menekan potensi kerugian akibat saldo minus (yang mencapai miliaran rupiah dari ribuan member bermasalah).
+Saya mengerjakan mekanisme auto-suspend dan pencegahan transaksi secara real-time saat proses registrasi, login, hingga pembuatan order berdasarkan validasi data perangkat, identitas, dan anomali pengiriman. Sistem ini memangkas proses analisis manual tim fraud dan secara otomatis mencegah potensi kerugian finansial perusahaan.
 
-Manfaat bagi Tim AYO:Pengalaman mengamankan alur transaksi dan validasi data ini sangat berguna untuk AYO, khususnya dalam mencegah penyalahgunaan sistem promo/voucher, memitigasi akun fiktif/spammer yang menahan (hold) slot lapangan tanpa bayar, serta menjaga sistem reservasi tetap bersih, adil, dan menguntungkan bagi pemilik venue maupun komunitas.
+Manfaat bagi Tim AYO:Pengalaman mengamankan alur transaksi dan validasi data ini sangat berguna untuk AYO, khususnya dalam mencegah penyalahgunaan sistem promo/voucher,
+memitigasi akun fiktif/spammer yang menahan (hold) slot lapangan tanpa bayar, serta menjaga sistem reservasi tetap bersih, adil, dan menguntungkan bagi pemilik venue maupun komunitas.
 
 
 4. Tuliskan motivasi Anda melamar posisi ini dan bagaimana Anda berencana
 untuk memberikan dampak positif jika terpilih nantinya.
 Jawab :
 Motivasi:
-Saya suka badminton dan futsal. Saya juga pernah cedera cukup lama sampai berat badan naik puluhan kilo, dan sekarang lagi berjuang keras buat bangun habit olahraga lagi bareng teman-teman di kampung. AYO itu aplikasi yang solutif banget buat orang-orang seperti saya. Buat saya pribadi, kerja di AYO bukan cuma sekadar ngoding cari nafkah, tapi ikut ngembangin produk yang memang saya pakai, saya butuhkan, dan saya senangi bidangnya.
+Saya suka badminton dan futsal. Saya juga pernah cedera cukup lama sampai berat badan naik puluhan kilo,
+dan sekarang lagi berjuang keras buat bangun habit olahraga lagi bareng teman-teman di kampung. AYO itu aplikasi yang solutif banget buat orang-orang seperti saya. Buat saya pribadi,
+kerja di AYO bukan cuma sekadar ngoding cari nafkah, tapi ikut ngembangin produk yang memang saya pakai, saya butuhkan, dan saya senangi bidangnya.
 
 Rencana Dampak Positif:
-Dari sisi teknis, saya bawa pengalaman backend Golang dari KiriminAja dan pengalaman bikin Trimhub supaya sistem booking AYO tetap lancar, cepat, dan nggak gampang error pas lagi ramai-ramainya. Dari sisi tim, terbiasa jadi ketua pemuda di kampung bikin saya terbiasa komunikasi luwes, nggak kaku, dan siap bantu tim tetap solid buat ngejar target bareng.
+Dari sisi teknis, saya bawa pengalaman backend Golang dari KiriminAja dan pengalaman bikin Trimhub supaya sistem booking AYO tetap lancar, cepat,
+dan nggak gampang error pas lagi ramai-ramainya. Dari sisi tim, terbiasa jadi ketua pemuda di kampung bikin saya terbiasa komunikasi luwes, nggak kaku,
+dan siap bantu tim tetap solid buat ngejar target bareng.
 
 5. Jika Anda diberikan kesempatan untuk bergabung, langkah-langkah apa
 yang akan Anda ambil dalam 3 bulan pertama untuk menunjukkan performa
 terbaik?
 Jawab :
 Bulan ke-1 (Paham Sistem & Ikuti SOP):
-Fokus onboarding untuk memahami codebase, aturan penulisan kode, arsitektur backend, alur deployment, serta SOP kerja yang ada di AYO. Mengamati alur kerja tim dan berdiskusi dengan mentor/senior untuk memastikan pemahaman teknis sudah matang dan sesuai batasan wewenang sebelum mulai memegang tugas mandiri.
+Fokus onboarding untuk memahami codebase, aturan penulisan kode, arsitektur backend, alur deployment, serta SOP kerja yang ada di AYO.
+Mengamati alur kerja tim dan berdiskusi dengan mentor/senior untuk memastikan pemahaman teknis sudah matang dan sesuai batasan wewenang sebelum mulai memegang tugas mandiri.
 
 Bulan ke-2 (Eksekusi Fitur Sesuai Arahan):
-Mulai mengerjakan fitur baru secara mandiri dengan tetap berpegang pada standar teknis tim. Berkoordinasi intens dengan senior engineer, tim produk, dan QA agar kode yang dibuat rapi, sesuai spesifikasi, dan tidak melanggar batasan sistem yang sudah berjalan.
+Mulai mengerjakan fitur baru secara mandiri dengan tetap berpegang pada standar teknis tim. Berkoordinasi intens dengan senior engineer, tim produk,
+dan QA agar kode yang dibuat rapi, sesuai spesifikasi, dan tidak melanggar batasan sistem yang sudah berjalan.
 
 Bulan ke-3 (Kontribusi Stabil & Solutif):
-Menjaga konsistensi kerja dan kualitas kode. Jika melihat ada potensi optimasi (seperti efisiensi kueri atau respons sistem di jam sibuk), saya akan diskusikan dan mintakan persetujuan terlebih dahulu ke tim sebelum implementasi, sambil siap membantu review kode sesuai standar tim.
+Menjaga konsistensi kerja dan kualitas kode. Jika melihat ada potensi optimasi (seperti efisiensi kueri atau respons sistem di jam sibuk),
+saya akan diskusikan dan mintakan persetujuan terlebih dahulu ke tim sebelum implementasi, sambil siap membantu review kode sesuai standar tim.
